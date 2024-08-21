@@ -91,8 +91,8 @@ namespace AspDotNetCoreProject.API.Controllers
                 var result = await _companyService.UpdateCompany(UserId, company);
                 if (!result)
                 {
-                    _logger.LogInformation($"Company not found, companyModel {companyModel}");
-                    return BadRequestHttpResult("Company not found");
+                    _logger.LogInformation($"Company name already exists, companyModel {companyModel}");
+                    return BadRequestHttpResult("Company name already exists");
                 }
                 _logger.LogInformation($"Company updated successfully, {company.Name}");
                 return UpdatedHttpResult();
