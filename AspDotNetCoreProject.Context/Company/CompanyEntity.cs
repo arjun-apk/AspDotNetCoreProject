@@ -21,4 +21,10 @@
         public string? UpdatedBy { get; set; }
         public DateTime? UpdatedOn { get; set; }
     }
+
+    public class CompanyHistoryEntity : CompanyEntity
+    {
+        public required long CompanyHistoryId { get; set; }
+
+    }
 }

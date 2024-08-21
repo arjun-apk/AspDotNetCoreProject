@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using ExpressMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspDotNetCoreProject.API.Controllers
@@ -15,7 +16,7 @@ namespace AspDotNetCoreProject.API.Controllers
         [NonAction]
         public T2 MapData<T1, T2>(T1 data)
         {
-            return ExpressMapper.Mapper.Map<T1, T2>(data);
+            return Mapper.Map<T1, T2>(data);
         }
 
         [NonAction]
