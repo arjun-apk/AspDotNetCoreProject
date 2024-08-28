@@ -10,10 +10,7 @@ using AspDotNetCoreProject.Context.Database;
 using AspDotNetCoreProject.Context.User;
 using AspDotNetCoreProject.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using MySql.Data.MySqlClient;
-using System.Data;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -66,7 +63,7 @@ builder.Services
     .AddGraphQLServer()
     .AddQueryType<GraphQLQuery>()
     .AddMutationType<GraphQLMutation>()
-    .AddType<GraphQLType>();
+    .AddType<CompanyType>();
 
 builder.Services.AddControllers(options =>
 {
