@@ -1,4 +1,7 @@
 using AspDotNetCoreProject.API.Attribute;
+using AspDotNetCoreProject.API.GraphQL.Mutations;
+using AspDotNetCoreProject.API.GraphQL.Queries;
+using AspDotNetCoreProject.API.GraphQL.Types;
 using AspDotNetCoreProject.Application;
 using AspDotNetCoreProject.Context.Account;
 using AspDotNetCoreProject.Context.Common;
@@ -30,6 +33,13 @@ builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ICompanyService, CompanyService>();
 
+builder.Services.AddScoped<CompanyType>();
+builder.Services.AddScoped<CompanyQuery>();
+builder.Services.AddScoped<CompanyMutation>();
+
+builder.Services.AddScoped<GraphQLQuery>();
+builder.Services.AddScoped<GraphQLMutation>();
+
 var jwtSettings = builder.Configuration.GetSection("JwtConfig").Get<JwtConfig>();
 var key = Encoding.ASCII.GetBytes(jwtSettings!.Key);
 
@@ -51,6 +61,12 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(key)
     };
 });
+
+builder.Services
+    .AddGraphQLServer()
+    .AddQueryType<GraphQLQuery>()
+    .AddMutationType<GraphQLMutation>()
+    .AddType<GraphQLType>();
 
 builder.Services.AddControllers(options =>
 {
@@ -81,5 +97,12 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseRouting();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapGraphQL();
+});
+app.UseGraphQLGraphiQL();
 
 app.Run();
